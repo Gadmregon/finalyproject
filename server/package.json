@@ -1,11 +1,23 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "node js rest api",
+  "description": "Node js rest api",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }

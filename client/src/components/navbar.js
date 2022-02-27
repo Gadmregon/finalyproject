@@ -1,27 +1,54 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
 function NavBar() {
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>React-Bootstrap</Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="light">
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>SexyGames</Navbar.Brand>
+          </LinkContainer>
           <Nav className="me-auto">
             <LinkContainer to="/profile">
-              <Nav.Link>Profile</Nav.Link>
+              <Nav.Link active>Profile</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/admin">
-              <Nav.Link>Admin</Nav.Link>
+              <Nav.Link active>Admin</Nav.Link>
             </LinkContainer>
           </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+          <Nav>
+            <Form className="d-flex">
+              <FormControl
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <Button variant="outline-success" className="me-5">
+                Search
+              </Button>
+            </Form>
+            <LinkContainer to="/register">
+              <Button variant="primary" className="me-2">
+                Registration
+              </Button>
+            </LinkContainer>
+            <Button variant="primary">Log in</Button>
+          </Nav>
+        </Container>
+      </Navbar>
+
+      <Outlet />
+    </>
   );
 }
 

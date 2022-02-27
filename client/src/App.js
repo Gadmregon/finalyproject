@@ -10,12 +10,13 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<NavBar />}>
+          <Route index element={<Home />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="register" element={<Register />} />
+        </Route>
       </Routes>
     </>
   );
