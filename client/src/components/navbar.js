@@ -11,12 +11,13 @@ import { Outlet } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
 function NavBar() {
+  const user = null;
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="light">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>SexyGames</Navbar.Brand>
+            <Navbar.Brand>Games</Navbar.Brand>
           </LinkContainer>
           <Nav className="me-auto">
             <LinkContainer to="/profile">
@@ -37,16 +38,22 @@ function NavBar() {
                 Search
               </Button>
             </Form>
-            <LinkContainer to="/register">
-              <Button variant="primary" className="me-2">
-                Registration
-              </Button>
-            </LinkContainer>
-            <Button variant="primary">Log in</Button>
+
+            {user ? (
+              <>HelloUser</>
+            ) : (
+              <>
+                <LinkContainer to="/register">
+                  <Button variant="primary" className="me-2 ">
+                    Registration
+                  </Button>
+                </LinkContainer>
+                <Button variant="primary">Log in</Button>
+              </>
+            )}
           </Nav>
         </Container>
       </Navbar>
-
       <Outlet />
     </>
   );

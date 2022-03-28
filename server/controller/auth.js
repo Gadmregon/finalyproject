@@ -1,5 +1,8 @@
 const { User } = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const secret = "test";
 
 class auth {
   async reg(req, res) {
@@ -14,7 +17,7 @@ class auth {
       if (candidate) {
         return res.status(400).json({ message: "email exists" });
       }
-      bcrypt.hash(password, 10).then(async (hash) => {
+      const result = bcrypt.hash(password, 10).then(async (hash) => {
         await User.create({
           email: email,
           password: hash,
@@ -22,17 +25,49 @@ class auth {
           isAdmin: false,
         });
 
-        res.json("registered successfully");
+        const token = jwt.sign({ email: result.email, id: result.id }, secret, {
+          expiresIn: "1h",
+        });
+
+        res.status(201).json({ result, token });
       });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Reg error" });
+      res.status(500).json({ message: "Something went wrong" });
     }
   }
 
   async login(req, res) {
+    const { email, password } = req.body;
+
     try {
-    } catch (error) {}
+      const candidate = await User.findOne({ where: { email } }).catch(
+        (err) => {
+          console.log(err);
+        }
+      );
+
+      if (!candidate)
+        return res.status(404).json({ message: "User doesn't exist" });
+
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        candidate.password
+      );
+
+      if (!isPasswordCorrect)
+        return res.status(400).json({ message: "Invalid credentials" });
+
+      const token = jwt.sign(
+        { email: candidate.email, id: candidate.id },
+        secret,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({ result: candidate, token });
+    } catch (error) {
+      res.status(500).json({ message: "Something went wrong" });
+    }
   }
 
   async users(req, res) {

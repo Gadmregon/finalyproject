@@ -6,8 +6,6 @@ import { Home, Profile, Admin, Register } from "./pages";
 import NavBar from "./components/navbar";
 
 function App() {
-  // const [show, setShow] = useState(true);
-
   return (
     <>
       <Routes>
